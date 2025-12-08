@@ -126,3 +126,5 @@ RAZORPAY_KEY_SECRET = 'yVgDzj7J3Nn6xlPl3tzkNrRX'
 
 # Email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ALLOWED_HOSTS = ['ourcarepoint.pythonanywhere.com']
