@@ -5,18 +5,16 @@ Care Point Hospital Management System
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-y=fw=-p-7*djc0vkt7$=%ip@wcpmm^tx%#ool&u+38-#a@sc5&'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Turn off debug for deployment
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+# REQUIRED: Add your PythonAnywhere domain
+ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
 
 
 # Application definition
@@ -27,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Hospital Apps
     'accounts',
     'departments',
@@ -80,18 +78,10 @@ DATABASES = {
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 
@@ -102,28 +92,37 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# REQUIRED for PythonAnywhere
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Custom User Model
+
+# Custom User model
 AUTH_USER_MODEL = 'accounts.User'
 
-# Login/Logout URLs
+
+# Login redirects
 LOGIN_URL = 'accounts:login'
 LOGIN_REDIRECT_URL = 'accounts:redirect_after_login'
 LOGOUT_REDIRECT_URL = 'accounts:login'
 
-# Razorpay Configuration
+
+# Razorpay Keys (test mode)
 RAZORPAY_KEY_ID = 'rzp_test_Rn84o8Z3bbux28'
 RAZORPAY_KEY_SECRET = 'yVgDzj7J3Nn6xlPl3tzkNrRX'
 
-# Email Configuration (for notifications)
+
+# Email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
