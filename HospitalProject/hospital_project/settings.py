@@ -4,21 +4,17 @@ Care Point Hospital Management System
 """
 
 from pathlib import Path
-import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# We override this in environment variables for Render & PythonAnywhere
-SECRET_KEY = os.environ.get("SECRET_KEY", "your-local-dev-secret-key")
+SECRET_KEY = 'django-insecure-y=fw=-p-7*djc0vkt7$=%ip@wcpmm^tx%#ool&u+38-#a@sc5&'
 
-# DEBUG should be False in production
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+# Turn off debug for deployment
+DEBUG = False
 
-# Dynamic ALLOWED_HOSTS works for PythonAnywhere, Render, and local dev
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS", "ourcarepoint.pythonanywhere.com"
-).split(",")
+# REQUIRED: Add your PythonAnywhere domain
+ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
 
 
 # Application definition
@@ -43,10 +39,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    # For Render static hosting
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -76,21 +68,12 @@ WSGI_APPLICATION = 'hospital_project.wsgi.application'
 
 
 # Database
-# IMPORTANT:
-# - PythonAnywhere uses SQLite3 by default unless you add MySQL/Postgres
-# - Render uses Postgres with a DATABASE_URL env var
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',    # For local & PythonAnywhere free tier
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-# If Render DATABASE_URL exists, override the default DB config
-DATABASE_URL = os.environ.get("DATABASE_URL")
-if DATABASE_URL:
-    import dj_database_url
-    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 
 
 # Password validation
@@ -109,15 +92,12 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript)
+# Static files
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-# Same STATIC_ROOT works for both Render + PythonAnywhere
+# REQUIRED for PythonAnywhere
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Whitenoise static compression
-WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 
 # Media files
@@ -140,9 +120,11 @@ LOGOUT_REDIRECT_URL = 'accounts:login'
 
 
 # Razorpay Keys (test mode)
-RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID", "rzp_test_Rn84o8Z3bbux28")
-RAZORPAY_KEY_SECRET = os.environ.get("RAZORPAY_KEY_SECRET", "yVgDzj7J3Nn6xlPl3tzkNrRX")
+RAZORPAY_KEY_ID = 'rzp_test_Rn84o8Z3bbux28'
+RAZORPAY_KEY_SECRET = 'yVgDzj7J3Nn6xlPl3tzkNrRX'
 
 
 # Email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+ALLOWED_HOSTS = ['ourcarepoint.pythonanywhere.com']
